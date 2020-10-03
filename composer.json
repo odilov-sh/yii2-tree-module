@@ -13,9 +13,14 @@
     "require": {
         "yiisoft/yii2": "~2.0.0"
     },
-    "autoload": {
+      "autoload": {
         "psr-4": {
-            "odilov\\treemodule\\": ""
+            "odilov\\treemodule\\": "src"
+        }
+    },
+     "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     }
 }
