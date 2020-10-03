@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist odilov-sh/yii2-tree-module "*"
+php composer.phar require --prefer-dist odilov-sh/yii2-tree-module "@dev"
 ```
 
 or add
 
 ```
-"odilov-sh/yii2-tree-module": "*"
+"odilov-sh/yii2-tree-module": "@dev"
 ```
 
 to the require section of your `composer.json` file.
