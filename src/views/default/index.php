@@ -1,6 +1,6 @@
 <?php
-    use frontend\modules\treemanager\models\Tree;
-    \frontend\modules\treemanager\models\TreeManagerAssset::register($this);
+    use odilov\treemodule\models\Tree;
+    \odilov\treemodule\models\TreeManagerAssset::register($this);
 
 use yii\grid\DataColumn;
 use yii\helpers\Html;

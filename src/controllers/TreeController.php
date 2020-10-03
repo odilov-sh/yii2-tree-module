@@ -1,15 +1,20 @@
 <?php
 
 
-namespace frontend\modules\treemanager\controllers;
+namespace odilov\treemodule\controllers;
 
 
 use yii\helpers\Json;
-use frontend\modules\treemanager\models\Tree;
+use odilov\treemodule\models\Tree;
 use Yii;
 
 class TreeController extends \yii\web\Controller
 {
+
+    public function actionSave()
+    {
+        return "salom";
+    }
 
     public function actionSaveTree()
     {

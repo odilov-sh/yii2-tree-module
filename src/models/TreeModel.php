@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\modules\treemanager\models;
+namespace odilov\treemodule\models;
 
 
 use yii\helpers\Html;

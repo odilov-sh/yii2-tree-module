@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\modules\treemanager\models;
+namespace odilov\treemodule\widget;
 
 
 use yii\base\Widget;
