@@ -9,7 +9,7 @@ trait TreeTrait
 
     public function getChilds()
     {
-        return $this->hasMany(Tree::className(), ['parent_id' => 'id']);
+        return $this->hasMany(get_called_class(), ['parent_id' => 'id']);
     }
 
     public function getHasChilds()
@@ -17,7 +17,7 @@ trait TreeTrait
         return count($this->childs) > 0;
     }
 
-    public static function getMain()
+    public static function getMainItems()
     {
         return static::find()->where(['parent_id' => null])->orderBy(['sort' => SORT_ASC])->all();
     }

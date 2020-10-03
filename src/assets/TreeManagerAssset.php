@@ -8,10 +8,10 @@ use yii\web\JqueryAsset;
 class TreeManagerAssset extends AssetBundle
 {
 
-    public $sourcePath = '@odilov/assets';
+    public $sourcePath = __DIR__ ;
 
     public $css = [
-//        'css/github-dark.css',
+        'css/github-dark.css',
         'css/stylesheet.css',
     ];
     public $js = [
@@ -20,7 +20,7 @@ class TreeManagerAssset extends AssetBundle
     ];
 
     public $depends = [
-      'yii\web\JqueryAsset',
+      'yii\bootstrap\BootstrapPluginAsset',
     ];
 
 }
