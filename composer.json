@@ -1,0 +1,21 @@
+{
+    "name": "odilov-sh/yii2-tree-module",
+    "description": "Yii2 tree manager",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Shukurullo Odilov",
+            "email": "shukurullo0321@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "odilov\\treemodule\\": ""
+        }
+    }
+}
