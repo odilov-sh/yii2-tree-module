@@ -64,7 +64,6 @@ class TreeWidget extends Widget
     public function renderItem($item)
     {
 
-
         $action = Yii::createObject([
             'class' => \yii\grid\ActionColumn::className(),
         ]);
@@ -73,9 +72,12 @@ class TreeWidget extends Widget
             'class' => 'pull-right action-column'
         ]);
 
+        $btn = Html::a('ss', '#', ['class' => 'btn btn-success abtn']);
+
         $name = Html::tag('div', $item->name.$actionColumn);
 
         $modelClass = $this->getModelClass();
+
         $childs = '';
         $childItems = $modelClass::find()->where(['parent_id' => $item->id])->orderBy(['sort' => SORT_ASC])->all();
 
