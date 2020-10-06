@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-class TreeWidget extends Widget
+class TreeViewWidget extends Widget
 {
 
     public $query;
@@ -68,14 +68,11 @@ class TreeWidget extends Widget
             'class' => \yii\grid\ActionColumn::className(),
         ]);
 
-        $actionColumn = Html::tag('span', $action->renderDataCell($item, $item->id, 1) , [
-            'class' => 'pull-right action-column'
+        $actionColumn = Html::tag('span', $action->renderDataCell($item, $item->id, 1), [
+            'class' => 'pull-right tree-action-column'
         ]);
 
-        $btn = Html::a('ss', '#', ['class' => 'btn btn-success abtn']);
-
-        $name = Html::tag('div', $item->name.$actionColumn);
-
+        $name = Html::tag('div', $item->name . $actionColumn, ['class' => 'item-container']);
         $modelClass = $this->getModelClass();
 
         $childs = '';
@@ -89,7 +86,7 @@ class TreeWidget extends Widget
             $childs = Html::tag('ul', $childs, ['class' => 'tree-child-list-wrap']);
         }
 
-        return Html::tag('li', $name  . $childs, ['id' => $item->id]);
+        return Html::tag('li', $name . $childs, ['id' => $item->id]);
 
     }
 
@@ -116,25 +113,17 @@ class TreeWidget extends Widget
         $url = Url::to(['/treemodule/tree/save-tree']);
         $tableName = $this->getTableName();
         $treeId = $this->listContainerOptions['id'];
-
         $js = "
-                $('#{$this->saveButtonOptions['id']}').click(function(e){
-                e.preventDefault()
-                var tree =  $('#{$this->listContainerOptions['id']}').sortableListsToArray()
+                var selector =  $('#{$this->saveButtonOptions['id']}')
+                var treeSelector =  $('#{$this->listContainerOptions['id']}')
                 var url = '{$url}'
-                var tableName = '{$tableName}'
-                $.ajax({
-                    url: url,
-                    data: {
-                        'tree' : tree,
-                        'tableName' : tableName,
-                    },
-                    type: 'post',
-                })
-            })
+                var tableName = '{$tableName}' 
+                saveTree(selector, treeSelector, url, tableName)
         ";
         $this->getView()->registerJs($js);
-        return Html::button($label, $this->saveButtonOptions);
+        $button =  Html::button($label, $this->saveButtonOptions);
+        $loaderArea = Html::tag('div', '', ['class'=> 'tree-loader-area']);
+        return Html::tag('div', $button.$loaderArea, ['style' => "display:flex; align-items: center"]);
     }
 
     public function registerAssets()
@@ -142,70 +131,11 @@ class TreeWidget extends Widget
 
         TreeManagerAssset::register($this->getView());
         $listId = ArrayHelper::getValue($this->listContainerOptions, 'id');
-
         $js = "
-        
-        $(function()
-        {
-            var options = {
-                placeholderCss: {'background-color': '#ff8'},
-                hintCss: {'background-color':'#bbf'},
-                isAllowed: function( cEl, hint, target )
-                {
-                    if( target.data('module') === 'c' && cEl.data('module') !== 'c' )
-                    {
-                        hint.css('background-color', '#ff9999');
-                        return false;
-                    }
-                    else
-                    {
-                        hint.css('background-color', '#99ff99');
-                        return true;
-                    }
-                },
-                opener: {
-                    active: true,
-                    as: 'html', 
-                      close: '<span class=\"glyphicon glyphicon-minus c3\"></span>',
-                    open: '<span class=\"glyphicon glyphicon-plus\"></span>',
-                    openerCss: {
-                        'display': 'inline-block',
-                        //'width': '18px', 'height': '18px',
-                        'float': 'left',
-                        'margin-left': '-35px',
-                        'margin-right': '5px',
-                        //'background-position': 'center center', 'background-repeat': 'no-repeat',
-                        'font-size': '1.1em'
-                    }
-                },
-                ignoreClass: 'clickable'
-            };
-
-            var optionsPlus = {
-                insertZonePlus: true,
-                placeholderCss: {'background-color': '#ff8'},
-                hintCss: {'background-color':'#bbf'},
-                opener: {
-                    active: true,
-                    as: 'html',  // if as is not set plugin uses background image
-                    close: '<span class=\"glyphicon glyphicon-minus c3\"></span>',
-                    open: '<span class=\"glyphicon glyphicon-plus\"></span>',
-                    openerCss: {
-                        'display': 'inline-block',
-                        'float': 'left',
-                        'margin-left': '-35px',
-                        'margin-right': '5px',
-                        'font-size': '1.1em'
-                    }
-                }
-            };
-
-            $('#" . $listId . "').sortableLists( options );
-        });
-";
-
+            var selector = $('#{$listId}')
+            setSortableList(selector)
+        ";
         $this->getView()->registerJs($js);
-
     }
 
     private function getModelClass()
